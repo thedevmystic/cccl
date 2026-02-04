@@ -24,13 +24,16 @@
 
 _CCCL_BEGIN_NAMESPACE_CUDA
 
-// Checks if two values are equal to a specified value
-template <typename T>
-struct equal_to_value
+/// @brief `__equal_to_value` is a function object that checks if a value is equal to
+/// a specified value. It takes a single template parameter `_T`, which represents the
+/// type of the value to be compared.
+/// @tparam _T The type of the value to be compared.
+template <typename _T>
+struct __equal_to_value
 {
-  T value_;
+  _T value_;
 
-  explicit constexpr equal_to_value(const T& value) noexcept
+  explicit constexpr __equal_to_value(const T& value) noexcept
       : value_(value)
   {}
 
@@ -39,21 +42,26 @@ struct equal_to_value
   }
 };
 
-// Checks if a value is equal to one
-template <typename T>
-struct equal_to_one : equal_to_value<T>
+/// @brief `__equal_to_one` is a function object that checks if a value is equal to one.
+/// It inherits from `__equal_to_value` and initializes it with the value `1`.
+/// @tparam _T The type of the value to be compared.
+template <typename _T>
+struct __equal_to_one : __equal_to_value<T>
 {
-  constexpr equal_to_one() noexcept
-      : equal_to_value<T>(static_cast<T>(1))
+  constexpr __equal_to_one() noexcept
+      : __equal_to_value<T>(static_cast<T>(1))
   {}
 };
 
-// Checks if a value is equal to its default constructed value
-template <typename T>
-struct equal_to_default : equal_to_value<T>
+/// @brief `__equal_to_default` is a function object that checks if a value is equal to
+/// the default value of its type. It inherits from `__equal_to_value` and initializes
+/// it with the default-constructed value of type `_T`.
+/// @tparam _T The type of the value to be compared.
+template <typename _T>
+struct __equal_to_default : __equal_to_value<T>
 {
-  constexpr equal_to_default() noexcept
-      : equal_to_value<T>(T{})
+  constexpr __equal_to_default() noexcept
+      : __equal_to_value<T>(T{})
   {}
 };
 
